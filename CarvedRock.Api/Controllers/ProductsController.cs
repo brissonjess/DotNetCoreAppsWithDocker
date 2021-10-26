@@ -22,7 +22,7 @@ namespace CarvedRock.Api.Controllers
         [HttpGet]
         public IEnumerable<Product> GetProducts(string category = "all")
         {
-            _logger.LogInformation(message: "Test this logging message from getproducts controller for {category}", category);
+            _logger.LogInformation(message: "Starting controller action GetProducts for {category}", category);
             return _productLogic.GetProductsForCategory(category);
         }
     }
