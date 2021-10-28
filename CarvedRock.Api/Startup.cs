@@ -32,6 +32,13 @@ namespace CarvedRock.Api
                 .ForContext("NestedProperty", nestedProp)
                 .Information("Loaded configuration!", connectionString);
 
+            //this method is good for debugging all of your configuration settings
+            //should only be used in a dev environment for finding config errors
+            //warning: can expose a lot of settings that you do not want others to know
+            //var dbgView = (Configuration as IConfigurationRoot).GetDebugView();
+            //Log.ForContext("ConfigurationDebug:",dbgView)
+            //    .Information("Config dump.");
+
             services.AddScoped<IProductLogic, ProductLogic>();
             services.AddScoped<IQuickOrderLogic, QuickOrderLogic>();
 
