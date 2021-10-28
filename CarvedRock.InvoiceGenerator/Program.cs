@@ -1,16 +1,35 @@
 ﻿using System;
+using System.IO;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 
 namespace CarvedRock.InvoiceGenerator
 {
     class Program
     {
+        private static IConfiguration _config;
         static void Main(string[] args)
         {
+            _config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetParent(AppContext.BaseDirectory)?.FullName)
+                .AddJsonFile("appsettings.json",false)
+                .AddEnvironmentVariables()
+                .Build();
+
             ConfigureLogging();
 
             try
             {
+                //get configuration values from the appSettings json files
+                var connectionString = _config.GetConnectionString("Db");
+                var simpleProperty = _config.GetValue<string>("SimpleProperty");
+                var nestedProp = _config.GetValue<string>("Inventory:NestedProperty");
+
+                Log.ForContext("ConnectionString", connectionString)
+                    .ForContext("SimpleProperty", simpleProperty)
+                    .ForContext("NestedProperty", nestedProp)
+                    .Information("Loaded configuration!", connectionString);
+
                 Log.ForContext("Args", args)
                    .Information("Starting program...");
 
