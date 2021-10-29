@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  carvedrock.api:
+    image: ${DOCKER_REGISTRY-}carvedrockapi
+    build:
+      context: .
+      dockerfile: CarvedRock.Api/Dockerfile
+    ports:
+        - "8080:80"
+    environment:
+        - SimpleProperty="hello-from-compose"
+    depends_on:
+        - seq_in_dc
+
+  seq_in_dc: #<- DNS name
+    image: datalust/seq
+    ports:
+        - '8005:80'
+    environment:
+        - ACCEPT_EULA=Y
+  

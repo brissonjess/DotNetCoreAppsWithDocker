@@ -17,7 +17,7 @@ namespace CarvedRock.Api
                 .Enrich.FromLogContext()
                 .Enrich.WithMachineName()
                 .Enrich.WithProperty("Assembly", name) //add custom emrich property 
-                .WriteTo.Seq(serverUrl: "http://host.docker.internal:5341")
+                .WriteTo.Seq(serverUrl: "http://seq_in_dc:5341") //refer to your service name stated in your docker compose file
                 .WriteTo.Console()
                 .CreateLogger();
 
